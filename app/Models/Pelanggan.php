@@ -15,6 +15,8 @@ class Pelanggan extends Model
 
     protected $table = 'pelanggan';
 
+    public $timestamps = false;
+
     public function kartu() {
         return $this->belongsTo(Kartu::class);
     }

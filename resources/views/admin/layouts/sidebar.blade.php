@@ -18,6 +18,8 @@
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="/admin/jenis_produk">Jenis Produk</a>
                             <a class="nav-link" href="/admin/produk">Produk</a>
+                            <a class="nav-link" href="/admin/kartu">Kartu</a>
+                            <a class="nav-link" href="/admin/pelanggan">Pelanggan</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">

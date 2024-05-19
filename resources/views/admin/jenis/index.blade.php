@@ -7,17 +7,9 @@
         <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
         <li class="breadcrumb-item active">Jenis Produk</li>
     </ol>
-    {{-- <div class="card mb-4">
-        <div class="card-body">
-            DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
-            <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
-            .
-        </div>
-    </div> --}}
     <div class="card mb-4">
         <div class="card-header">
-            <i class="fas fa-table me-1"></i>
-            Jenis Produk
+            <a href="" class="btn btn-md btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-square-plus"></i></a>
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
@@ -45,5 +37,34 @@
         </div>
     </div>
 </div>
+
+<!-- Button trigger modal -->
+{{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+  </button> --}}
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Jenis Produk</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/admin/jenis_produk/store" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="mb-3">
+                <input type="text" class="form-control" name="nama" id="nama" aria-describedby="emailHelp" placeholder="Masukan Jenis Produk">
+              </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Tambah</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
 @endsection

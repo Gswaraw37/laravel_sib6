@@ -7,17 +7,9 @@
         <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
         <li class="breadcrumb-item active">Produk</li>
     </ol>
-    {{-- <div class="card mb-4">
-        <div class="card-body">
-            DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
-            <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
-            .
-        </div>
-    </div> --}}
     <div class="card mb-4">
         <div class="card-header">
-            <i class="fas fa-table me-1"></i>
-            Daftar Produk
+            <a href="/admin/produk/create" class="btn btn-md btn-primary"><i class="fa-solid fa-square-plus"></i></a>
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
@@ -29,8 +21,11 @@
                         <th>Harga Beli</th>
                         <th>Harga Jual</th>
                         <th>Stok</th>
-                        <th>Min Stok</th>
+                        <th>Minimal Stok</th>
+                        <th>Deskripsi</th>
+                        <th>Foto</th>
                         <th>Jenis Produk</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -41,8 +36,11 @@
                         <th>Harga Beli</th>
                         <th>Harga Jual</th>
                         <th>Stok</th>
-                        <th>Min Stok</th>
+                        <th>Minimal Stok</th>
+                        <th>Deskripsi</th>
+                        <th>Foto</th>
                         <th>Jenis Produk</th>
+                        <th>Action</th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -55,7 +53,12 @@
                             <td>{{ $p->harga_jual }}</td>
                             <td>{{ $p->stok }}</td>
                             <td>{{ $p->min_stok }}</td>
+                            <td>{{ $p->deskripsi }}</td>
+                            <td>{{ $p->foto }}</td>
                             <td>{{ $p->jenis }}</td>
+                            <td>
+                                <a href="/admin/produk/{{ $p->id }}" class="btn btn-sm btn-success">Detail</a>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

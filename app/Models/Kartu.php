@@ -15,6 +15,8 @@ class Kartu extends Model
 
     protected $table = 'kartu';
 
+    public $timestamps = false;
+
     public function pelanggan() {
         return $this->hasMany(Pelanggan::class);
     }
