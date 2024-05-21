@@ -36,6 +36,17 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
+        //proses upload foto
+        //jika file foto ada yang terupload
+        if(!empty($request->foto)){
+            //maka proses berikut yang dijalankan
+            $fileName = 'foto-' . uniqid() . '.' . $request->foto->extension();
+            //setelah tau fotonya sudah masuk maka tempatkan ke public
+            $request->foto->move(public_path('admin/img'), $fileName);
+        } else {
+            $fileName = '';
+        }
+
         // tambah data produk
         DB::table('produk')->insert([
             'kode' => $request->kode,
@@ -45,6 +56,8 @@ class ProdukController extends Controller
             'stok' => $request->stok,
             'min_stok' => $request->min_stok,
             'jenis_produk_id' => $request->jenis_produk_id,
+            'deskripsi' => $request->deskripsi,
+            'foto' => $fileName,
         ]);
 
         return redirect('admin/produk');
@@ -68,7 +81,14 @@ class ProdukController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        //jenis_produk
+        $jenis_produk = DB::table('jenis_produk')->get();
+        $produk = DB::table('produk')->where('id', $id)->get();
+
+        return view('admin.produk.edit', compact([
+            'jenis_produk',
+            'produk',
+        ]));
     }
 
     /**
@@ -76,7 +96,37 @@ class ProdukController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        //foto lama
+        $fotoLama = DB::table('produk')->select('foto')->where('id', $id)->get();
+        foreach ($fotoLama as $f1) {
+            $fotoLama = $f1->foto;
+        }
+
+        // jika foto sudah ada yang terupload
+        if ($request->foto) {
+            // hapus foto lama
+            if(!empty($fotoLama->foto)) unlink(public_path('admin/img' . $fotoLama->foto));
+            //maka proses berikut yang dijalankan
+            $fileName = 'foto-' . uniqid() . '.' . $request->foto->extension();
+            //setelah tau fotonya sudah masuk maka tempatkan ke public
+            $request->foto->move(public_path('admin/img'), $fileName);
+        } else {
+            $fileName = $fotoLama;
+        }
+
+        DB::table('produk')->where('id', $id)->update([
+            'kode' => $request->kode,
+            'nama' => $request->nama,
+            'harga_beli' => $request->harga_beli,
+            'harga_jual' => $request->harga_jual,
+            'stok' => $request->stok,
+            'min_stok' => $request->min_stok,
+            'jenis_produk_id' => $request->jenis_produk_id,
+            'deskripsi' => $request->deskripsi,
+            'foto' => $fileName,
+        ]);
+
+        return redirect('admin/produk');
     }
 
     /**

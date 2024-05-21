@@ -9,7 +9,7 @@
     </ol>
     <div class="card mb-4">
         <div class="card-header">
-            <a href="/admin/produk/create" class="btn btn-md btn-primary"><i class="fa-solid fa-square-plus"></i></a>
+            <a href="{{ route('produk.create') }}" class="btn btn-md btn-primary"><i class="fa-solid fa-square-plus"></i></a>
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
@@ -21,9 +21,6 @@
                         <th>Harga Beli</th>
                         <th>Harga Jual</th>
                         <th>Stok</th>
-                        <th>Minimal Stok</th>
-                        <th>Deskripsi</th>
-                        <th>Foto</th>
                         <th>Jenis Produk</th>
                         <th>Action</th>
                     </tr>
@@ -36,9 +33,6 @@
                         <th>Harga Beli</th>
                         <th>Harga Jual</th>
                         <th>Stok</th>
-                        <th>Minimal Stok</th>
-                        <th>Deskripsi</th>
-                        <th>Foto</th>
                         <th>Jenis Produk</th>
                         <th>Action</th>
                     </tr>
@@ -52,12 +46,10 @@
                             <td>{{ $p->harga_beli }}</td>
                             <td>{{ $p->harga_jual }}</td>
                             <td>{{ $p->stok }}</td>
-                            <td>{{ $p->min_stok }}</td>
-                            <td>{{ $p->deskripsi }}</td>
-                            <td>{{ $p->foto }}</td>
                             <td>{{ $p->jenis }}</td>
                             <td>
-                                <a href="/admin/produk/{{ $p->id }}" class="btn btn-sm btn-success">Detail</a>
+                                <a href="{{ route('produk.show', $p->id) }}" class="btn btn-sm btn-success"><i class="fa-solid fa-eye"></i></a>
+                                <a href="{{ route('produk.edit', $p->id) }}" class="btn btn-sm btn-warning">Edit</a>
                             </td>
                         </tr>
                     @endforeach
