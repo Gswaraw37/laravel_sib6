@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produk;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -36,6 +37,26 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'kode' => 'required|unique:produk|max:10',
+            'nama' => 'required|max:45',
+            'harga_beli' => 'required|numeric',
+            'harga_jual' => 'required|numeric',
+            'stok' => 'required|numeric',
+            'min_stok' => 'required|numeric',
+            'foto' => 'nullable|file|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ],
+        [
+            'kode.max' => 'kode maksimal 10 karakter',
+            'kode.required' => 'Kode wajib diisi',
+            'kode.unique' => 'Kode tidak boleh sama',
+            'nama.required' => 'Nama wajib diisi',
+            'nama.max' => 'Nama maksimal 45 karakter',
+            'foto.max' => 'Foto maksimal 2 MB',
+            'foto.mimes' => 'File ekstensi hanya bisa jpg, png, jpeg, gif, svg',
+            'foto.file' => 'File harus berbentuk image',
+        ]);
+
         //proses upload foto
         //jika file foto ada yang terupload
         if(!empty($request->foto)){
@@ -134,6 +155,8 @@ class ProdukController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::table('produk')->where('id', $id)->delete();
+
+        return redirect('admin/produk');
     }
 }

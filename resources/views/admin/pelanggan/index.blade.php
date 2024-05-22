@@ -19,9 +19,6 @@
                         <th>Kode</th>
                         <th>Nama</th>
                         <th>Jenis Kelamin</th>
-                        <th>Tempat Lahir</th>
-                        <th>Tanggal Lahir</th>
-                        <th>Email</th>
                         <th>Kartu</th>
                         <th>Action</th>
                     </tr>
@@ -32,9 +29,6 @@
                         <th>Kode</th>
                         <th>Nama</th>
                         <th>Jenis Kelamin</th>
-                        <th>Tempat Lahir</th>
-                        <th>Tanggal Lahir</th>
-                        <th>Email</th>
                         <th>Kartu</th>
                         <th>Action</th>
                     </tr>
@@ -46,13 +40,41 @@
                             <td>{{ $p->kode }}</td>
                             <td>{{ $p->nama }}</td>
                             <td>{{ $p->jk }}</td>
-                            <td>{{ $p->tmp_lahir }}</td>
-                            <td>{{ $p->tgl_lahir }}</td>
-                            <td>{{ $p->email }}</td>
                             <td>{{ $p->kartu->nama }}</td>
                             <td>
-                                <a href="/admin/pelanggan/{{ $p->id }}" class="btn btn-sm btn-success"><i class="fa-solid fa-eye"></i>
-                                </a><a href="/admin/pelanggan/{{ $p->id }}/edit" class="btn btn-sm btn-warning">Edit</a>
+                                <div class="btn-group" role="group">
+                                    <a href="/admin/pelanggan/{{ $p->id }}" class="btn btn-sm btn-success"><i class="fa-solid fa-eye"></i>
+                                    </a><a href="/admin/pelanggan/{{ $p->id }}/edit" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <form action="{{ route('pelanggan.destroy', $p->id) }}" method="POST" class="display:inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        {{-- modal start --}}
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $p->id }}">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+                                        
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal{{ $p->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Hapus Produk</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                Apakah anda yakin akan menghapus data {{ $p->nama }}?
+                                                </div>
+                                                <div class="modal-footer justify-content-center">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        {{-- modal end --}}
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
