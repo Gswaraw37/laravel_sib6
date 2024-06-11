@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\BerandaController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProdukController;
-use App\Http\Controllers\JenisProdukController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\KartuController;
+use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\JenisProdukController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -29,19 +33,23 @@ Route::get('/daftar_nilai', function () {
     return view('nilai.daftar_nilai');
 });
 
-Route::get('/dashboard', function () {
-    return view('admin.dashboard');
-});
+// Route::get('/dashboard', function () {
+//     return view('admin.dashboard');
+// });
 Route::get('/dashboard/table', function () {
     return view('admin.jenis.index');
 });
 
-Route::get('/', function () {
-    return view('front.home');
-});
+Route::get('/', [BerandaController::class, 'index']);
+Route::get('/add-to-cart/{id}', [BerandaController::class, 'addToCart'])->name('add.to.cart');
+Route::get('/detail_cart/{id}', [BerandaController::class, 'detail']);
+Route::get('/shop_cart', [BerandaController::class, 'cart']);
+Route::put('/update-cart', [BerandaController::class, 'update'])->name('update.cart');
+Route::delete('/remove-from-cart', [BerandaController::class, 'remove'])->name('remove.from.cart');
 
+// middleware berguna sebagai pembatas atau validasi antara visitor yang sudah memiliki user akses dan belum memiliki akses
 // prefix dan grouping adalah mengelompokkan routing ke satu jenis route
-Route::prefix('admin')->group(function(){
+Route::prefix('admin')->middleware(['auth', 'checkActive', 'role:admin|manager|staff'])->group(function(){
     // route memanggil controller setiap fungsi
     // (nanti linknya menggunakan url, ada didalam view)
     Route::get('/jenis_produk', [JenisProdukController::class, 'index']);
@@ -52,6 +60,14 @@ Route::prefix('admin')->group(function(){
 
     Route::resource('/produk', ProdukController::class);
     Route::resource('/pelanggan', PelangganController::class);
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    Route::get('/user', [UserController::class, 'index']);
+    Route::put('/user/{user}/activate', [UserController::class, 'activate'])->name('admin.user.activate');
+    Route::get('/profile', [UserController::class, 'showProfile']);
+    // patch atau put dua syntax yang sama untuk digunakan sebagai pengubah data
+    Route::put('/profile/{id}', [UserController::class, 'update']);
 });
 
 // tugas kelompok
@@ -61,3 +77,6 @@ Route::prefix('admin')->group(function(){
 // 4. anggota tidak perlu install laravel, melainkan melakukan git clone terhadap repo
 // 5. setelah cloning lakukan composer install di dalam command prompt
 // 6. collaborate mentor
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -4,7 +4,7 @@
 <div class="container-fluid px-4">
     <h1 class="mt-4">Pelanggan</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+        <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Dashboard</a></li>
         <li class="breadcrumb-item active">Pelanggan</li>
     </ol>
     <div class="card mb-4">

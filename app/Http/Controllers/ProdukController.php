@@ -6,6 +6,7 @@ use App\Models\Produk;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProdukController extends Controller
 {
@@ -81,7 +82,8 @@ class ProdukController extends Controller
             'foto' => $fileName,
         ]);
 
-        return redirect('admin/produk');
+        // Alert::success('Tambah Produk', 'Berhasil Menambahkan Produk');
+        return redirect('admin/produk')->with('success', 'Berhasil Menambahkan Produk');
     }
 
     /**
@@ -147,6 +149,7 @@ class ProdukController extends Controller
             'foto' => $fileName,
         ]);
 
+        Alert::success('Update Produk', 'Produk Berhasil Diupdate');
         return redirect('admin/produk');
     }
 

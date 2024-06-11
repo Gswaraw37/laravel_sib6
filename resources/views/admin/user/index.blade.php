@@ -2,10 +2,10 @@
 @section('konten')
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Jenis Produk</h1>
+    <h1 class="mt-4">Management User</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Dashboard</a></li>
-        <li class="breadcrumb-item active">Jenis Produk</li>
+        <li class="breadcrumb-item active">Management User</li>
     </ol>
     <div class="card mb-4">
         <div class="card-header">
@@ -16,20 +16,43 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Jenis Produk</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th>No</th>
-                        <th>Jenis Produk</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Action</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    @foreach ($jenis as $j)
+                    @foreach ($userAll as $ua)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $j->nama }}</td>
+                            <td>{{ $ua->name }}</td>
+                            <td>{{ $ua->email }}</td>
+                            <td>{{ $ua->role }}</td>
+                            @if ($ua->is_active == true)
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-success">
+                                        Active
+                                    </button>
+                                </td>
+                            @else
+                                <td>
+                                    <form action="{{ route('admin.user.activate', $ua->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="btn btn-sm btn-primary">Aktifkan</button>
+                                    </form>
+                                </td>   
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>
