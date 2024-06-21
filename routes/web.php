@@ -47,6 +47,9 @@ Route::get('/shop_cart', [BerandaController::class, 'cart']);
 Route::put('/update-cart', [BerandaController::class, 'update'])->name('update.cart');
 Route::delete('/remove-from-cart', [BerandaController::class, 'remove'])->name('remove.from.cart');
 
+Route::get('/produkapi', [ProdukController::class, 'produkApi']);
+Route::get('/produkapi/{id}', [ProdukController::class, 'produkApiDetail']);
+
 // middleware berguna sebagai pembatas atau validasi antara visitor yang sudah memiliki user akses dan belum memiliki akses
 // prefix dan grouping adalah mengelompokkan routing ke satu jenis route
 Route::prefix('admin')->middleware(['auth', 'checkActive', 'role:admin|manager|staff'])->group(function(){
